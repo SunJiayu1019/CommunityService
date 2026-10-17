@@ -1,0 +1,14 @@
+services:
+  backend:
+    build: ./backend
+    env_file: ./backend/.env
+    expose: ["8000"]
+    volumes: ["./backend/data:/app/data"]
+    environment:
+      VECTOR_PATH: data/chroma
+    restart: unless-stopped
+  frontend:
+    build: ./frontend
+    ports: ["8080:80"]
+    depends_on: [backend]
+    restart: unless-stopped
